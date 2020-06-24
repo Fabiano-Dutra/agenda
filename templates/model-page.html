@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "model-header.html" %}  <!- Incluindo o model cabeçalho
+</head>
+<body>
+    {% block content %} {% endblock %}
+    {% include "model-footer.html" %} <!- Incluindo o model rodapé ->
+</body>                     <!- Utilizando esta estrutura pode se aproveitar código  ->
+</html>                     <!- pois todos htmls vao compartilhar do mesmo cabeçalho e rodapé. ->

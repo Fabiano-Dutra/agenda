@@ -1,0 +1,10 @@
+{% extends "model-page.html" %}  <!- Criando uma extensão do model-page.html ->
+
+{% block content %}  <!- A lista da agenda será o block content definido dentro do model-page.html. ->
+    <h2>Agendamentos</h2>       <!- Este título aparecerá no html ->
+    <ul style="font-size: 18px">  <!- Utilizando uma tag ul para exibir lista em tópicos. ->
+    {% for evento in eventos %}     <!- A utilização do percentual permite entrada de comandos python. ->
+        <li>{{evento.titulo}} - {{evento.get_data_evento}}</li>  <!- Chamando os campos da tabela de eventos. ->
+    {% endfor %}
+    </ul>
+{% endblock %}  <!- Comando de fechamento do block content ->

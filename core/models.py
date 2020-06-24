@@ -18,4 +18,11 @@ class Evento(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)  # usando um usuário estrangeiro, o cascade é para qdo
                                                                 # for deletar o usuário tb delete as outras infos dele
     class Meta:
-        db_table = 'evento'  # está exigindo que minha tabela se chame evento
+        db_table = 'evento'  # Está exigindo que minha tabela se chame evento
+
+    def __str__(self):  # colocar aqui a explicação da ultima aula do modulo 2
+        return self.titulo
+
+    def get_data_evento(self):   # Alterando o formato de data apresentado no html
+        return self.data_evento.strftime('%d/%m/%y %H:%M Hrs')  # Novo formato de data e tb incluindo hora e minutos
+
