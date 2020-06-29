@@ -22,9 +22,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('agenda/', views.lista_eventos),  # rota definida para a função lista_eventos dentro de views
     # Abaixo era uma opção de ser fazer o index, optamos por outra logo abaixo com o redirectview
-    # path('', views.index) # Incluído o caminho index para o navegador já abrir num html definico
-    path('', RedirectView.as_view(url='/agenda/')) # Esta é a forma mais direta de index sem passar por views.
-]                         # no caso o html escolhido é o agenda.html
+    # path('', views.index) # Esta era uma opção de caminho index para o navegador já abrir num html definico
+    # Abaixo é uma forma mais direta de index sem passar por views, o index escolhido é o agenda.html
+    path('', RedirectView.as_view(url='/agenda/')),
+    # Incluído uma roda para o login
+    path('login/', views.login_user),
+    path('login/submit', views.submit_login),
+    path('logout/', views.logout_user),
+]
 
 
 
