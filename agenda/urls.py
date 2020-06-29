@@ -27,6 +27,8 @@ urlpatterns = [
     path('', RedirectView.as_view(url='/agenda/')),
     # Incluído uma roda para o login
     path('login/', views.login_user),
+    path('agenda/evento/', views.evento),  # Rota para a tela de inserção de dados
+    path('agenda/evento/submit', views.submit_evento),  # Rota para a função salvar na tela de inserção de dados
     path('login/submit', views.submit_login),
     path('logout/', views.logout_user),
 ]

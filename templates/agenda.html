@@ -2,6 +2,9 @@
 
 {% block content %}  <!- A lista da agenda será o block content definido dentro do model-page.html. ->
     <h2>Agendamentos</h2>       <!- Este título aparecerá no html ->
+    <a href="evento/">   <!- esta linha é para especificar caminho para o botão 'novo evento' ->
+        <button type="button">Novo Evento</button>  <!- Botão para chamar página de inserção de eventos ->
+    </a>
     <ul style="font-size: 18px">  <!- Utilizando uma tag ul para exibir lista em tópicos. ->
     {% for evento in eventos %}     <!- A utilização do percentual permite entrada de comandos python. ->
         <li>{{evento.titulo}} - {{evento.get_data_evento}}</li>  <!- Chamando os campos da tabela de eventos. ->

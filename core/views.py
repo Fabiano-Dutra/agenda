@@ -37,3 +37,20 @@ def lista_eventos(request):
     dados = {'eventos' : evento}  # passando um dicionario de eventos no response
     return render(request,'agenda.html', dados)  # a função foi criada para renderizar o template criado
                                         # incluído o response no return do html
+
+@login_required(login_url='/login/')
+def evento(request):  # Criado a função evento para chamar o evento.html para inserção de dados
+    return render(request, 'evento.html')
+
+@login_required(login_url='/login/')
+def submit_evento(request):
+    if request.POST:
+        titulo = request.POST.get('titulo')
+        data_evento = request.POST.get('data_evento')
+        descricao = request.POST.get('descricao')
+        usuario  = request.user
+        Evento.objects.create(titulo=titulo,
+                              data_evento=data_evento,
+                              descricao=descricao,
+                              usuario=usuario)
+    return redirect('/')
