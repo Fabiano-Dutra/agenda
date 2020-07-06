@@ -29,6 +29,7 @@ urlpatterns = [
     path('login/', views.login_user),
     path('agenda/evento/', views.evento),  # Rota para a tela de inserção de dados
     path('agenda/evento/submit', views.submit_evento),  # Rota para a função salvar na tela de inserção de dados
+    path('agenda/evento/delete/<int:id_evento>/', views.delete_evento),  # Rota para deletar evento
     path('login/submit', views.submit_login),
     path('logout/', views.logout_user),
 ]

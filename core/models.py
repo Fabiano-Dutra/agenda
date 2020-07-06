@@ -26,3 +26,5 @@ class Evento(models.Model):
     def get_data_evento(self):   # Alterando o formato de data apresentado no html
         return self.data_evento.strftime('%d/%m/%y %H:%M Hrs')  # Novo formato de data e tb incluindo hora e minutos
 
+    def get_data_input_evento(self):
+        return self.data_evento.strftime('%Y-%m-%dT%H:%M')
