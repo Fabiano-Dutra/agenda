@@ -1,11 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
-
-# Create your models here.
+from datetime import datetime
 
 # Para a agenda funcionar preciso de uma tabela para manipular esta agenda
 # a tabela terá informações sobre o evento como: título, data, data de criação
 # Então será criada a tabela Eventos
+
 
 class Evento(models.Model):
     titulo = models.CharField(max_length=100)  # Charfield título, com tamanho 100, não pode ser em branco
@@ -28,3 +28,9 @@ class Evento(models.Model):
 
     def get_data_input_evento(self):
         return self.data_evento.strftime('%Y-%m-%dT%H:%M')
+
+    def get_evento_atrasado(self):
+        if self.data_evento < datetime.now():
+            return True
+        else:
+            return False

@@ -24,6 +24,7 @@ urlpatterns = [
     # Abaixo era uma opção de ser fazer o index, optamos por outra logo abaixo com o redirectview
     # path('', views.index) # Esta era uma opção de caminho index para o navegador já abrir num html definico
     # Abaixo é uma forma mais direta de index sem passar por views, o index escolhido é o agenda.html
+    path('agenda/lista/<int:id_usuario>/', views.json_lista_evento),
     path('', RedirectView.as_view(url='/agenda/')),
     # Incluído uma roda para o login
     path('login/', views.login_user),

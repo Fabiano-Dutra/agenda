@@ -1,9 +1,11 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect  # Importar o redirect do shortcuts, era uma opçao de index
 from core.models import Evento  # importando para poder listar os eventos
 from django.contrib.auth.decorators import login_required  # Importando o autenticador do django
 from django.contrib.auth import authenticate, login, logout  # Para autenticação de login na função submti_login
 from django.contrib import messages
-
+from datetime import datetime, timedelta  # Importando datetime para comparar hora atual com do evento
+from django.http.response import Http404, JsonResponse
 
 # Abaixo estava uma forma opcional de ser fazer o index, optamos por outra
 # def index(request):  # Criando um index, minha página principal.
@@ -33,7 +35,9 @@ def submit_login(request):
 def lista_eventos(request):
     usuario = request.user  # buscando a informação do usuario
     # evento = Evento.objects.all()  # buscando todos os eventos da agenda com ".all"
-    evento = Evento.objects.filter(usuario=usuario)  # buscando eventos da agenda filtrado para o usuario
+    data_atual = datetime.now() - timedelta(hours=1)  # Criando string data_atual
+    evento = Evento.objects.filter(usuario=usuario,  # buscando eventos da agenda filtrado para o usuario
+                                    data_evento__gt=data_atual)  # __gt compara se está acima da data atual
     dados = {'eventos' : evento}  # passando um dicionario de eventos no response
     return render(request,'agenda.html', dados)  # a função foi criada para renderizar o template criado
                                         # incluído o response no return do html
@@ -76,8 +80,25 @@ def submit_evento(request):
 @login_required(login_url='/login/')
 def delete_evento(request, id_evento):  # Função para deletar eventos
     usuario = request.user    # Buscando identificação do usuário.
-    evento = Evento.objects.get(id=id_evento)  # Identificação do evento.
+    try:
+        evento = Evento.objects.get(id=id_evento)  # Identificação do evento.
+    except Exception:
+        raise Http404()  # Na exceção dará erro 404
     if usuario == evento.usuario:  # Validando se o usuário é o dono do evento.
         evento.delete()   # Deletar se sim.
+    else:
+        raise Http404()  # Dará erro 404
     return redirect('/')
+
+#@login_required(login_url='/login/')
+#def json_lista_evento(request):
+#    usuario = request.user  # buscando a informação do usuario
+#    evento = Evento.objects.filter(usuario=usuario).values('id', 'titulo')  # buscando eventos da agenda filtrado para o usuario
+#    return JsonResponse(list(evento), safe=False)  # Retorna o JsonResponse
+
+# Outra opão de fazer o json para enviar uma resposta:
+def json_lista_evento(request, id_usuario):
+    usuario = User.objects.get(id=id_usuario)
+    evento = Evento.objects.filter(usuario=usuario).values('id', 'titulo')
+    return JsonResponse(list(evento), safe=False)
 
